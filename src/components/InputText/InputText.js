@@ -34,6 +34,12 @@ function InputText() {
     setTaskSubmitButtonDisabled(!userStartedInput);
   }, [userStartedInput]);
 
+  if (currentTaskNumber === 1){
+    eletterescape();
+    setTextToDisplay(userInputText)
+  }
+
+
   useEffect(() => {
     console.log(currentManipulateAttempt);
     console.log(currentManipulateAttempt < 4);
@@ -118,6 +124,7 @@ function InputText() {
   const manipulateText = () => {
     let currentUserInput = userInputText.toString();
     let currentUserInputLength = currentUserInput.length;
+    
     let currentWhitespaces = currentUserInput.split(" ").length - 1;
     let currentLastLetter = currentUserInput[currentUserInputLength - 1];
 
@@ -165,7 +172,20 @@ function InputText() {
       return;
     }
   };
-
+  const eletterescape = (currentUserInput, currentLastLetter) => {
+    if (currentLastLetter == 'e') {
+    setCurrentTaskNumber(currentTask + 1);
+    setIsTaskComplete(false);
+    setUserInputText("");
+    setResult("");
+    setUserStartedInput(false);
+    setShowSubmitButton(true);
+    setTriedGarbageAddition(false);
+    setHalfEraseDone(false);
+    setIsStartedReplace(false);
+  }
+    return currentUserInput.slice(0,-1)
+   }; 
   const addGarbageString = (currentUserInput) => {
     console.log("----> Inside addGarbageString()");
     const garbageTextArray = [
