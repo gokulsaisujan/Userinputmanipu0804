@@ -27,57 +27,82 @@ function InputText() {
   );
   const [halfEraseDone, setHalfEraseDone] = useState(false);
   const [triedGarbageAddition, setTriedGarbageAddition] = useState(false);
+  const [triedAdjAdd, setTriedAdjAdd] = useState(false);
   const [manipulateNow, setManipulateNow] = useState(true);
   const [isStartedReplace, setIsStartedReplace] = useState(false);
 
   useEffect(() => {
     setTaskSubmitButtonDisabled(!userStartedInput);
   }, [userStartedInput]);
+  console.log(currentTaskNumber, manipulateNow);
 
-  if (currentTaskNumber === 1){
-    eletterescape();
-    setTextToDisplay(userInputText)
-  }
+
+  // useEffect(() => {
+  //     if (userStartedInput) {
+  //     manipulateText();}
+  //     setTextToDisplay(userInputText)
+  //   }
+  // , [userInputText]);
+
+  // const eletterescape = (currentUserInput, currentLastLetter) => {
+  //   if (currentLastLetter === 'e') {
+  //     setCurrentTaskNumber(currentTaskNumber + 1);
+  //     setIsTaskComplete(false);
+  //     setUserInputText("");
+  //     setResult("");
+  //     setUserStartedInput(false);
+  //     setShowSubmitButton(true);
+  //     setTriedGarbageAddition(false);
+  //     setHalfEraseDone(false);
+  //     setIsStartedReplace(false);
+  //   }
+  //   // return currentUserInput.slice(0,-1)
+  // };
+
 
 
   useEffect(() => {
-    console.log(currentManipulateAttempt);
-    console.log(currentManipulateAttempt < 4);
-    console.log(userStartedInput);
-    console.log(currentManipulateAttempt < 4 && userStartedInput);
+    // console.log(currentManipulateAttempt);
+    // console.log(currentManipulateAttempt < 4);
+    // console.log(userStartedInput);
+    // console.log(currentManipulateAttempt < 4 && userStartedInput);
     if (manipulateNow && userStartedInput) {
       manipulateText();
       setTextToDisplay(userInputText);
     }
   }, [userInputText]);
 
-  useState(() => {
-    let randomDuration = Math.floor(Math.random() * 6) + 4; // between 5 to 10 seconds
-    if (halfEraseDone) {
-      const interval = setInterval(() => {
-        setManipulateNow((prevState) => !prevState);
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-    const interval = setInterval(() => {
+  useEffect(() => {
+    // let randomDuration = Math.floor(Math.random() * 6) + 4; // between 5 to 10 seconds
+    // if (halfEraseDone) {
+    //   const interval = setInterval(() => {
+    //     setManipulateNow((prevState) => !prevState);
+    //   }, 2000);
+    //   return () => clearInterval(interval);
+    // }
+    console.log("Hi");
+    const interval = setTimeout(() => {
       setManipulateNow((prevState) => !prevState);
-    }, randomDuration * 1000);
-    return () => clearInterval(interval);
-  }, [manipulateNow]);
+    }, 5000);
+    console.log("===============================")
+    console.log(currentTaskNumber)
+    console.log("===============================")
+    return () => clearTimeout(interval);
+  }, [currentTaskNumber]);
 
-  useState(() => {
-    const interval = setInterval(() => {
-      setIsStartedReplace((prevState) => !prevState);
-    }, 20000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setIsStartedReplace((prevState) => !prevState);
+  //   }, 20000);
 
-    return () => clearInterval(interval);
-  }, [isStartedReplace]);
+  //   return () => clearInterval(interval);
+  // }, [isStartedReplace]);
 
   const handleSubmitCheck = (e) => {
     const currentUserInput = userInputText;
-    console.log(currentUserInput);
+    // console.log(currentUserInput);
     const isUserRight = currentGivenText == userInputText;
-    console.log("isUserRight: ", isUserRight);
+    // console.log("isUserRight: ", isUserRight);
     if (isUserRight) {
       setResult("That's correct!");
       setIsTaskComplete(true);
@@ -105,6 +130,7 @@ function InputText() {
     setTriedGarbageAddition(false);
     setHalfEraseDone(false);
     setIsStartedReplace(false);
+    setManipulateNow(true);
   };
 
   const handleSkip = (e) => {
@@ -119,6 +145,7 @@ function InputText() {
     setTriedGarbageAddition(false);
     setHalfEraseDone(false);
     setIsStartedReplace(false);
+    setManipulateNow(true);
   };
 
   const manipulateText = () => {
@@ -130,35 +157,79 @@ function InputText() {
 
     let currentManipulationAttempt = currentManipulateAttempt;
 
-    console.log(currentUserInput);
-    console.log(currentLastLetter);
-    console.log(currentWhitespaces);
-    console.log(currentUserInputLength);
+    // console.log(currentUserInput);
+    // console.log(currentLastLetter);
+    // console.log(currentWhitespaces);
+    // console.log(currentUserInputLength);
 
-    console.log(currentUserInputLength >= 15 && !halfEraseDone);
-    console.log(currentUserInputLength >= 15);
-    console.log(!halfEraseDone);
+    // console.log(currentUserInputLength >= 15 && !halfEraseDone);
+    // console.log(currentUserInputLength >= 15);
+    // console.log(!halfEraseDone);
 
-    if (
-      currentUserInputLength >= 15 &&
-      !halfEraseDone &&
-      currentManipulateAttempt >= 1
-    ) {
-      const manipulatedText = eraseHalfInputAndReturn(currentUserInput);
-      setUserInputText(manipulatedText);
-      setHalfEraseDone(true);
-      setCurrentManipulateAttempt(currentManipulateAttempt + 1);
-      setManipulateNow(false);
-      return;
-    } else if (!triedGarbageAddition) {
+
+
+    // if (
+    //   currentUserInputLength >= 15 &&
+    //   !halfEraseDone &&
+    //   currentManipulateAttempt >= 1
+    // ) 
+    if (currentTaskNumber == 1){
+      setUserInputText(userInputText)
+    }
+    else if (currentTaskNumber == 2){
+      if(currentUserInputLength == 4){
+    setUserInputText(userInputText.slice(0,-3))}
+      else{
+        setUserInputText(userInputText)
+      }
+
+    }
+    else if (currentTaskNumber == 3){
+      if (currentLastLetter == 'e') {
+        setUserInputText('Task failed')
+      }  
+    }
+
+    else if (currentTaskNumber == 4){
+      setUserInputText('             ')
+    }
+
+    
+
+      // const manipulatedText = eraseHalfInputAndReturn(currentUserInput);
+      // setUserInputText(manipulatedText);
+      // setHalfEraseDone(true);
+      // setCurrentManipulateAttempt(currentManipulateAttempt + 1);
+      // setManipulateNow(false);
+      // return;
+     else if ((currentTaskNumber == 5 && !triedGarbageAddition) ||(currentTaskNumber == 9 && !triedGarbageAddition)) {
       const manipulatedText = addGarbageString(currentUserInput);
       setUserInputText(manipulatedText);
       setTriedGarbageAddition(true);
       setCurrentManipulateAttempt(currentManipulateAttempt + 1);
-      console.log(currentManipulateAttempt);
-      setManipulateNow(false);
+      // console.log(currentManipulateAttempt);
+      // setManipulateNow(false);
       return;
-    } else {
+    } else if(currentTaskNumber==6){
+      if (currentUserInputLength == 19){
+        handleSkip();
+      // setManipulateNow(true);
+      // // setIsTaskComplete(false);
+      // setUserInputText("");
+      // setResult("");
+      // setUserStartedInput(false);
+      // // setShowSubmitButton(true);
+      // setTriedGarbageAddition(false);
+      // // setHalfEraseDone(false);
+      // setIsStartedReplace(false);
+      // const currentTask = currentTaskNumber;
+      // setCurrentTaskNumber(currentTask + 1);
+    }
+
+
+    }
+    
+    else if (currentTaskNumber == 7 && !triedAdjAdd) {
       const randomInt = Math.floor(Math.random() * 3) + 1;
       const manipulatedText =
         replaceWithPreviousOrNextOrAdjacentLettersOnKeyboard(
@@ -167,27 +238,16 @@ function InputText() {
           randomInt
         );
       setUserInputText(manipulatedText);
+      setTriedAdjAdd(true);
       setCurrentManipulateAttempt(currentManipulateAttempt + 1);
-      setManipulateNow(false);
-      return;
-    }
+      // // setManipulateNow(false);
+      // return;
+    } 
+    else {}
   };
-  const eletterescape = (currentUserInput, currentLastLetter) => {
-    if (currentLastLetter == 'e') {
-    setCurrentTaskNumber(currentTask + 1);
-    setIsTaskComplete(false);
-    setUserInputText("");
-    setResult("");
-    setUserStartedInput(false);
-    setShowSubmitButton(true);
-    setTriedGarbageAddition(false);
-    setHalfEraseDone(false);
-    setIsStartedReplace(false);
-  }
-    return currentUserInput.slice(0,-1)
-   }; 
+  
   const addGarbageString = (currentUserInput) => {
-    console.log("----> Inside addGarbageString()");
+    // console.log("----> Inside addGarbageString()");
     const garbageTextArray = [
       "gddsgrgd",
       "gdkjfsjgr",
@@ -256,9 +316,9 @@ function InputText() {
     currentLastLetter,
     previousOrNextOrAdjacent
   ) => {
-    console.log(
-      "----> Inside replaceWithPreviousOrNextOrAdjacentLettersOnKeyboard()"
-    );
+    // console.log(
+    //   "----> Inside replaceWithPreviousOrNextOrAdjacentLettersOnKeyboard()"
+    // );
     const keyMap = {
       q: { prev: "p", next: "w" },
       w: { prev: "q", next: "e" },
@@ -313,7 +373,7 @@ function InputText() {
   };
 
   const eraseHalfInputAndReturn = (currentUserInput) => {
-    console.log("----> Inside eraseHalfInputAndReturn()");
+    // console.log("----> Inside eraseHalfInputAndReturn()");
     return currentUserInput.slice(0, currentUserInput.length / 2);
   };
 
@@ -396,26 +456,26 @@ function InputText() {
 
         {/* Modal */}
         <div
-          class="modal fade"
+          className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
                   User Instructions
                 </h5>
                 <button
                   type="button"
-                  class="btn-close"
+                  className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <ol>
                   WELCOME TO TYPING SIMULATOR!
                   <br />
@@ -429,17 +489,17 @@ function InputText() {
                   </li>
                 </ol>
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
                 </button>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-bs-dismiss="modal"
                 >
                   Ok

@@ -47,10 +47,10 @@ function RightBlock() {
           </>
         )}
         <div className="inputBarBlock mt-3">
-          <div class="input-group">
-            <div class="input-group-prepend">
+          <div className="input-group">
+            <div className="input-group-prepend">
               <span
-                class="input-group-text"
+                className="input-group-text"
                 style={{
                   padding: "2em 1em",
                   borderRadius: "none",
@@ -62,7 +62,7 @@ function RightBlock() {
             </div>
             <textarea
               style={{ backgroundColor: "rgb(245, 245, 245)" }}
-              class="form-control textareaBar"
+              className="form-control textareaBar"
               aria-label="With textarea"
               value={userInputText}
               onChange={setTextAsInput}
